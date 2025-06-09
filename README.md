@@ -2,6 +2,8 @@
 
 My neovim setup, tried to go as lightweight as possible while still keeping key IDE functionality. I'm a full-stack web developer, most of my work is in React/Typescript and Golang. I've tried to give a brief reason as to why I use each plugin.
 
+![image](https://github.com/user-attachments/assets/0ae5411f-c5e4-4ada-b9b4-34ed3ae469ae)
+
 ## Plugin Overview
 
 ### Plugin Manager
