@@ -17,6 +17,7 @@ My neovim setup, tried to go as lightweight as possible while still keeping key 
 
 ### UI
 - **[nvim-lualine/lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)** - Simple statusline, no frills
+- **[b0o/incline.nvim](https://github.com/b0o/incline.nvim)** - Shows file name in top right of buffer
 - **[rachartier/tiny-code-action.nvim](https://github.com/rachartier/tiny-code-action.nvim)** - Code action menu with a preview of the change
 - **[lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)**  - Git signs in the gutter and inline blame
 - **[nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)** - Syntax highlighting and parsing
