@@ -23,6 +23,7 @@ return {
 					"lua_ls",
 					"tailwindcss-language-server",
 					"ts_ls",
+					"gopls",
 				},
 				auto_update = false,
 				run_on_start = true,

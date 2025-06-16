@@ -13,11 +13,15 @@ return {
 		keys = {
 			{ "<leader>tr", "<cmd>Neotest run<cr>" },
 			{ "<leader>ti", "<cmd>Neotest output<cr>" },
+			{ "<leader>to", "<cmd>Neotest output-panel<cr>" },
 			{ "<leader>ts", "<cmd>Neotest summary<cr>" },
 			{ "<leader>ta", "<cmd>lua require('neotest').run.run({ suite = true })<cr>" },
 		},
 		config = function()
 			require("neotest").setup({
+				consumers = {
+					playwright = require("neotest-playwright.consumers").consumers,
+				},
 				settings = {
 					watch = true,
 				},
@@ -33,5 +37,17 @@ return {
 				},
 			})
 		end,
+	},
+	{
+		"thenbe/neotest-playwright",
+		keys = {
+			{
+				"<leader>ta",
+				function()
+					require("neotest").playwright.attachment()
+				end,
+				desc = "Launch test attachment",
+			},
+		},
 	},
 }

@@ -13,12 +13,6 @@ return {
 		},
 		opts = {
 			hint = true,
-			restricted_keys = {
-				["<Right>"] = { "n", "x" },
-				["<Left>"] = { "n", "x" },
-				["<Down>"] = { "n", "x" },
-				["<Up>"] = { "n", "x" },
-			},
 			disabled_keys = {
 				["<Up>"] = {},
 				["<Down>"] = {},
