@@ -27,10 +27,10 @@ vim.api.nvim_create_autocmd(
 			vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
 			-- replace with lua/plugins/code_actions.lua
-			-- vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-			vim.keymap.set("n", "<leader>ca", function()
-				require("tiny-code-action").code_action({})
-			end, opts)
+			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+			-- vim.keymap.set("n", "<leader>ca", function()
+			-- 	require("tiny-code-action").code_action({})
+			-- end, opts)
 
 			vim.keymap.set("n", "<leader>f", function()
 				vim.lsp.buf.format({ async = true })
