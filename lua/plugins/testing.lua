@@ -42,7 +42,7 @@ return {
 		"thenbe/neotest-playwright",
 		keys = {
 			{
-				"<leader>ta",
+				"<leader>tp",
 				function()
 					require("neotest").playwright.attachment()
 				end,

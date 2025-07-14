@@ -12,9 +12,16 @@ return {
 					require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
 				end,
 			})
+			vim.lsp.config("tailwindcss", {
+				settings = {
+					tailwindCSS = {
+						classFunctions = { "cva", "cx" },
+					},
+				},
+			})
 
 			require("mason").setup()
-			require("mason-lspconfig").setup()
+			require("mason-lspconfig").setup({})
 			require("mason-tool-installer").setup({
 				ensure_installed = {
 					"stylua",
