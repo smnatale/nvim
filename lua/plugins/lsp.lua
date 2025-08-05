@@ -7,7 +7,7 @@ return {
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 		},
 		config = function()
-			vim.lsp.config("*", {
+			vim.lsp.config("ts_ls", {
 				on_attach = function(client, bufnr)
 					require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
 				end,

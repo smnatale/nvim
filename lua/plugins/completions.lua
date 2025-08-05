@@ -9,6 +9,7 @@ return {
 					require("luasnip.loaders.from_vscode").lazy_load()
 				end,
 			},
+			"fang2hou/blink-copilot",
 		},
 		version = "1.*",
 		---@module 'blink.cmp'
@@ -41,12 +42,18 @@ return {
 					"path",
 					"snippets",
 					"buffer",
+					"copilot",
 				},
 				providers = {
 					lazydev = {
 						name = "LazyDev",
 						module = "lazydev.integrations.blink",
 						score_offset = 100,
+					},
+					copilot = {
+						name = "copilot",
+						module = "blink-copilot",
+						async = true,
 					},
 				},
 			},
@@ -60,6 +67,19 @@ return {
 		opts = {
 			library = {
 				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		opts = {
+			suggestion = { enabled = false },
+			panel = { enabled = false },
+			filetypes = {
+				markdown = true,
+				help = true,
 			},
 		},
 	},
