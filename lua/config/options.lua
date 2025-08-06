@@ -1,7 +1,5 @@
 -- Set leader key to space
 vim.g.mapleader = " "
--- Set leader key to space
-vim.g.maplocalleader = " "
 
 -- Number of spaces a tab represents
 vim.opt.tabstop = 2
@@ -57,9 +55,6 @@ vim.opt.scrolloff = 8
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
--- Faster scrolling
-vim.opt.lazyredraw = true
-
 -- Enable highlighting search in progress
 vim.opt.incsearch = true
 
@@ -69,5 +64,8 @@ vim.opt.ignorecase = true
 -- Enable case-sensitive search when uppercase letter present
 vim.opt.smartcase = true
 
--- diagnosic inline
+-- bordered popups
+vim.opt.winborder = "rounded"
+
+-- Diagnosics inline
 vim.diagnostic.config({ virtual_text = true })

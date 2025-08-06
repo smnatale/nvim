@@ -1,6 +1,8 @@
--- Disable Space bar since it'll be used as the leader key
-vim.keymap.set("n", "<leader>", "<nop>")
-vim.keymap.set("v", "<leader>", "<nop>")
+-- Source nvim config changes
+vim.keymap.set("n", "<leader>so", ":update<CR> :source<CR>")
+
+-- Disable Space bar since it will be used as the leader key
+vim.keymap.set({ "n", "v" }, "<leader>", "<nop>")
 
 -- Redo remap
 vim.keymap.set("n", "U", "<C-r>")
@@ -12,8 +14,8 @@ vim.keymap.set("n", "<C-Up>", ":wincmd k<CR>")
 vim.keymap.set("n", "<C-Right>", ":wincmd l<CR>")
 
 -- Save and quit current file quicker
-vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { silent = false })
-vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { silent = false })
+vim.keymap.set("n", "<leader>w", ":w<cr>", { silent = false, noremap = true })
+vim.keymap.set({ "n", "t" }, "<leader>q", ":q<cr>", { silent = false, noremap = true })
 
 -- Little one from Primeagen to mass replace string in a file
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { silent = false })
@@ -47,3 +49,19 @@ vim.keymap.set("n", "<leader>v", ":vsplit<CR>")
 -- Move selection up and down
 vim.keymap.set("v", "<C-Down>", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "<C-Up>", ":m '<-2<CR>gv=gv")
+
+-- Exit terminal with Esc
+vim.keymap.set("t", "<Esc>", "<C-\\><C-N>")
+
+-- Open small terminal
+vim.keymap.set("n", "<leader>st", function()
+	vim.cmd.vnew()
+	vim.cmd.term()
+	vim.cmd.wincmd("J")
+	vim.api.nvim_win_set_height(0, 10)
+end)
+
+vim.keymap.set("n", "<leader>config", function()
+	vim.cmd(":e ~/.config/nvim/init.lua")
+	vim.cmd(":Oil")
+end)
