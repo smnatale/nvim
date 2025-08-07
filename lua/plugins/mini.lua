@@ -16,6 +16,8 @@ return {
 			require("mini.icons").mock_nvim_web_devicons()
 
 			require("mini.notify").setup()
+			vim.notify = MiniNotify.make_notify()
+
 			require("mini.pairs").setup()
 
 			require("mini.pick").setup()

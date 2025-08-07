@@ -1,6 +1,7 @@
 return {
 	{
 		"stevearc/oil.nvim",
+		lazy = false,
 		keys = {
 			{ "<leader>e", "<cmd>Oil<cr>" },
 		},

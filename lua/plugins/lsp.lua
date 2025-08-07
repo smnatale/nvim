@@ -13,7 +13,7 @@ return {
 				ensure_installed = {
 					"stylua",
 					"prettierd",
-					"eslint_d",
+					"eslint-lsp",
 					"lua_ls",
 					"tailwindcss-language-server",
 					"ts_ls",
@@ -46,7 +46,9 @@ return {
 					vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
 					vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-					vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+					vim.keymap.set("n", "<leader>f", function()
+						vim.lsp.buf.format({ timeout_ms = 10000 })
+					end)
 
 					vim.keymap.set("n", "<leader>d", function()
 						vim.diagnostic.open_float({

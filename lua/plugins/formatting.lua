@@ -15,9 +15,6 @@ return {
 				graphql = { "prettierd", "prettier", stop_after_first = true },
 			},
 		},
-		config = function(_, opts)
-			require("conform").setup(opts)
-		end,
 	},
 	{
 		"windwp/nvim-ts-autotag",
