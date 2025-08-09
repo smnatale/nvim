@@ -1,34 +1,34 @@
 return {
 	{
-		"olimorris/codecompanion.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-		},
+		"NickvanDyke/opencode.nvim",
+		dependencies = { "folke/snacks.nvim" },
 		opts = {
-			strategies = {
-				chat = {
-					adapter = "anthropic",
-				},
-				inline = {
-					adapter = "anthropic",
-				},
-			},
-			adapters = {
-				anthropic = function()
-					local api_key = ""
-					local handle = io.popen("pass anthropic/api_key")
-					if handle then
-						api_key = handle:read("*a"):gsub("%s+$", "")
-						handle:close()
-					end
-
-					return require("codecompanion.adapters").extend("anthropic", {
-						env = {
-							api_key = api_key,
-						},
-					})
+			auto_fallback_to_embedded = false,
+		},
+		keys = {
+			{
+				"<leader>oa",
+				function()
+					require("opencode").ask()
 				end,
+				desc = "Ask opencode",
+				mode = "n",
+			},
+			{
+				"<leader>oa",
+				function()
+					require("opencode").ask("@selection: ")
+				end,
+				desc = "Ask opencode about selection",
+				mode = "v",
+			},
+			{
+				"<leader>op",
+				function()
+					require("opencode").select_prompt()
+				end,
+				desc = "Select prompt",
+				mode = { "n", "v" },
 			},
 		},
 	},

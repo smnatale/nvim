@@ -12,9 +12,6 @@ return {
 			"echasnovski/mini.pairs",
 		},
 		config = function()
-			require("mini.icons").setup()
-			require("mini.icons").mock_nvim_web_devicons()
-
 			require("mini.notify").setup()
 			vim.notify = MiniNotify.make_notify()
 
