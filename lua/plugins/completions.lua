@@ -4,6 +4,9 @@ return {
 		dependencies = {
 			"L3MON4D3/LuaSnip",
 			"rafamadriz/friendly-snippets",
+			"tpope/vim-dadbod",
+			"kristijanhusak/vim-dadbod-completion",
+			"kristijanhusak/vim-dadbod-ui",
 		},
 		opts = {
 			snippets = { preset = "luasnip" },
@@ -32,6 +35,12 @@ return {
 					"path",
 					"snippets",
 					"buffer",
+				},
+				per_filetype = {
+					sql = { "snippets", "dadbod", "buffer" },
+				},
+				providers = {
+					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 				},
 			},
 		},
