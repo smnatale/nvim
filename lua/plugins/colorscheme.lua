@@ -1,14 +1,17 @@
 return {
 	{
-		"vague2k/vague.nvim",
-		config = function()
-			require("vague").setup({
-				colors = {
-					bg = "#090B10",
-				},
-			})
-
-			vim.cmd("colorscheme vague")
+		"rose-pine/neovim",
+		name = "rose-pine",
+		opts = {
+			styles = {
+				bold = false,
+				italic = true,
+				transparency = true,
+			},
+		},
+		config = function(_, opts)
+			require("rose-pine").setup(opts)
+			vim.cmd("colorscheme rose-pine")
 		end,
 	},
 }
