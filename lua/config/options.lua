@@ -69,6 +69,3 @@ vim.opt.winborder = "rounded"
 
 -- Diagnosics inline
 vim.diagnostic.config({ virtual_text = true })
-
--- Hide cmd line when not in use
-vim.opt.cmdheight = 0
