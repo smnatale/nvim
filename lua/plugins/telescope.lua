@@ -13,29 +13,30 @@ return {
 			{ "<leader>sh", "<cmd>Telescope help_tags<cr>" },
 		},
 		config = function()
-			require("telescope").setup({
-				defaults = {
-					layout_strategy = "bottom_pane",
-					layout_config = {
-						height = 0.4,
-						preview_width = 0.7,
-						prompt_position = "bottom",
-					},
-					border = true,
-					sorting_strategy = "descending",
+			local bottom_pane_config = {
+				layout_strategy = "bottom_pane",
+				layout_config = {
+					height = 0.4,
+					prompt_position = "bottom",
 				},
+				border = true,
+				sorting_strategy = "descending",
+			}
+
+			local file_picker_config = {
+				layout_config = {
+					preview_width = 0.6,
+				},
+			}
+
+			require("telescope").setup({
+				defaults = bottom_pane_config,
 				pickers = {
-					find_files = {
-						hidden = true,
-					},
-					git_files = {
-						show_untracked = true,
-					},
+					find_files = vim.tbl_extend("force", file_picker_config, { hidden = true }),
+					git_files = vim.tbl_extend("force", file_picker_config, { show_untracked = true }),
 				},
 				extensions = {
-					["ui-select"] = {
-						require("telescope.themes").get_dropdown(),
-					},
+					["ui-select"] = bottom_pane_config,
 					fzf = {
 						fuzzy = true,
 						override_generic_sorter = true,
