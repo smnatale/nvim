@@ -19,6 +19,7 @@ return {
 					"ts_ls",
 					"gopls",
 					"graphql",
+					"goimports",
 				},
 				auto_update = false,
 				run_on_start = true,
@@ -29,6 +30,18 @@ return {
 					Lua = {
 						workspace = {
 							library = vim.api.nvim_get_runtime_file("", true),
+						},
+					},
+				},
+			})
+
+			vim.lsp.config("gopls", {
+				settings = {
+					gopls = {
+						completeUnimported = true,
+						usePlaceholders = true,
+						analyses = {
+							unusedparams = true,
 						},
 					},
 				},

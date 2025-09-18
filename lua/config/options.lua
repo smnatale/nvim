@@ -1,6 +1,9 @@
 -- Set leader key to space
 vim.g.mapleader = " "
 
+-- Disable mouse mode
+vim.opt.mouse = ""
+
 -- Number of spaces a tab represents
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
