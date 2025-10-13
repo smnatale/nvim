@@ -12,6 +12,7 @@ return {
 			{ "<leader>sf", "<cmd>Telescope find_files<cr>" },
 			{ "<leader>sg", "<cmd>Telescope live_grep<cr>" },
 			{ "<leader>sh", "<cmd>Telescope help_tags<cr>" },
+			{ "<C-a>", "<cmd>lua require('telescope.actions').add_selected_to_qflist" },
 		},
 		config = function()
 			local bottom_pane_config = {
@@ -26,7 +27,7 @@ return {
 
 			local file_picker_config = {
 				layout_config = {
-					preview_width = 0.6,
+					preview_width = 0.5,
 				},
 			}
 

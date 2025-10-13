@@ -1,3 +1,12 @@
+local function organize_imports()
+	local params = {
+		command = "_typescript.organizeImports",
+		arguments = { vim.api.nvim_buf_get_name(0) },
+		title = "",
+	}
+	vim.lsp.buf.execute_command(params)
+end
+
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -59,8 +68,20 @@ return {
 					vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
 					vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+
 					vim.keymap.set("n", "<leader>f", function()
-						vim.lsp.buf.format({ timeout_ms = 10000 })
+						if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
+							vim.lsp.buf.code_action({
+								apply = true,
+								---@diagnostic disable-next-line: assign-type-mismatch
+								context = { only = { "source.removeUnused.ts" }, diagnostics = {} },
+							})
+							vim.defer_fn(function()
+								vim.lsp.buf.format({ timeout_ms = 10000 })
+							end, 100) -- 100ms delay
+						else
+							vim.lsp.buf.format({ timeout_ms = 10000 })
+						end
 					end)
 
 					vim.keymap.set("n", "<leader>d", function()

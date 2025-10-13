@@ -2,6 +2,11 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		opts = {
+			options = {
+				disabled_filetypes = {
+					statusline = { "NvimTree" },
+				},
+			},
 			sections = {
 				lualine_a = {},
 				lualine_c = { {
