@@ -1,5 +1,16 @@
 return {
 	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+				{ path = "snacks.nvim", words = { "Snacks" } },
+				{ path = "lazy.nvim", words = { "LazyVim" } },
+			},
+		},
+	},
+	{
 		"Saghen/blink.cmp",
 		dependencies = {
 			"L3MON4D3/LuaSnip",
@@ -31,6 +42,7 @@ return {
 			fuzzy = { implementation = "lua" },
 			sources = {
 				default = {
+					"lazydev",
 					"lsp",
 					"path",
 					"snippets",
@@ -41,13 +53,18 @@ return {
 				},
 				providers = {
 					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						score_offset = 100,
+					},
 				},
 			},
 		},
-	config = function(_, opts)
-		require("luasnip.loaders.from_vscode").load()
-		require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/snippets" })
-		require("blink.cmp").setup(opts)
-	end,
+		config = function(_, opts)
+			require("luasnip.loaders.from_vscode").load()
+			require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/snippets" })
+			require("blink.cmp").setup(opts)
+		end,
 	},
 }
