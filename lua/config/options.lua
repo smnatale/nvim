@@ -70,8 +70,5 @@ vim.opt.smartcase = true
 -- bordered popups
 vim.opt.winborder = "rounded"
 
--- Diagnosics inline
-vim.diagnostic.config({ virtual_text = true })
-
 -- Auto update file if changed externally
 vim.opt.autoread = true
