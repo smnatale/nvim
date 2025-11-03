@@ -11,7 +11,6 @@ return {
 				function()
 					require("opencode").ask()
 				end,
-				desc = "Ask opencode",
 				mode = "n",
 			},
 			{
@@ -19,7 +18,6 @@ return {
 				function()
 					require("opencode").ask("@selection: ")
 				end,
-				desc = "Ask opencode about selection",
 				mode = "v",
 			},
 			{
@@ -27,7 +25,6 @@ return {
 				function()
 					require("opencode").select_prompt()
 				end,
-				desc = "Select prompt",
 				mode = { "n", "v" },
 			},
 		},

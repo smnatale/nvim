@@ -7,7 +7,7 @@ return {
 		},
 		dependencies = {
 			"refractalize/oil-git-status.nvim",
-			"mini.icons",
+			"nvim-tree/nvim-web-devicons",
 		},
 		opts = {
 			win_options = {
@@ -18,9 +18,6 @@ return {
 			},
 		},
 		config = function(_, opts)
-			require("mini.icons").setup()
-			require("mini.icons").mock_nvim_web_devicons()
-
 			require("oil").setup(opts)
 			require("oil-git-status").setup({
 				show_ignored = false,
@@ -31,7 +28,7 @@ return {
 		-- For when screensharing with co-workers
 		"nvim-tree/nvim-tree.lua",
 		dependencies = {
-			"mini.icons",
+			"nvim-tree/nvim-web-devicons",
 		},
 		lazy = true,
 		keys = {
@@ -59,9 +56,6 @@ return {
 			},
 		},
 		config = function(_, opts)
-			require("mini.icons").setup()
-			require("mini.icons").mock_nvim_web_devicons()
-
 			require("nvim-tree").setup(opts)
 		end,
 	},
