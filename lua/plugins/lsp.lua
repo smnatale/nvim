@@ -22,6 +22,7 @@ return {
 					"gopls",
 					"graphql",
 					"goimports",
+					"copilot",
 				},
 				auto_update = false,
 				run_on_start = true,

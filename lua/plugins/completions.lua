@@ -7,6 +7,7 @@ return {
 			"tpope/vim-dadbod",
 			"kristijanhusak/vim-dadbod-completion",
 			"kristijanhusak/vim-dadbod-ui",
+			"fang2hou/blink-copilot",
 		},
 		opts = {
 			snippets = { preset = "luasnip" },
@@ -36,6 +37,7 @@ return {
 					"path",
 					"snippets",
 					"buffer",
+					"copilot",
 				},
 				per_filetype = {
 					sql = { "snippets", "dadbod", "buffer" },
@@ -46,6 +48,11 @@ return {
 						name = "LazyDev",
 						module = "lazydev.integrations.blink",
 						score_offset = 100,
+					},
+					copilot = {
+						name = "copilot",
+						module = "blink-copilot",
+						async = true,
 					},
 				},
 			},
