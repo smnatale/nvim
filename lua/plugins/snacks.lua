@@ -1,4 +1,5 @@
 local get_custom_layout = function(height)
+	---@type snacks.picker.layout.Config
 	return {
 		reverse = true,
 		layout = {
@@ -47,6 +48,11 @@ return {
 						},
 					},
 					gh_pr = {
+						layouts = {
+							custom = get_custom_layout(0.99),
+						},
+					},
+					gh_diff = {
 						layouts = {
 							custom = get_custom_layout(0.99),
 						},
