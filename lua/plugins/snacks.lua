@@ -23,6 +23,7 @@ return {
 	{
 		"folke/snacks.nvim",
 		lazy = false,
+		priority = 1000,
 		---@type snacks.Config
 		opts = {
 			gh = {},
@@ -33,6 +34,9 @@ return {
 			lazygit = {},
 			terminal = {},
 			picker = {
+				matcher = {
+					frecency = true,
+				},
 				layout = "custom",
 				layouts = {
 					custom = get_custom_layout(),
