@@ -8,12 +8,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
--- open help in vertical split
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "help",
-	command = "wincmd L",
-})
-
 -- restore cursor to file position in previous editing session
 vim.api.nvim_create_autocmd("BufReadPost", {
 	callback = function(args)
@@ -27,6 +21,12 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 			end)
 		end
 	end,
+})
+
+-- open help in vertical split
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "help",
+	command = "wincmd L",
 })
 
 -- auto resize splits when the terminal's window is resized
@@ -51,7 +51,7 @@ vim.api.nvim_create_autocmd("BufRead", {
 	end,
 })
 
--- show cursorline only in active window
+-- show cursorline only in active window enable
 vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 	group = vim.api.nvim_create_augroup("active_cursorline", { clear = true }),
 	callback = function()
@@ -59,7 +59,7 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 	end,
 })
 
--- show cursorline only in active window
+-- show cursorline only in active window disable
 vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
 	group = "active_cursorline",
 	callback = function()
@@ -67,38 +67,35 @@ vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
 	end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-	group = vim.api.nvim_create_augroup("spellcheck_text", { clear = true }),
-	pattern = { "gitcommit", "markdown", "text", "plaintex" },
+-- ide like highlight when stopping cursor
+vim.api.nvim_create_autocmd("CursorMoved", {
+	group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = true }),
+	desc = "Highlight references under cursor",
 	callback = function()
-		vim.opt_local.spell = true
-		vim.opt_local.spelllang = "en_gb"
-		vim.opt_local.textwidth = 72
-		vim.opt_local.wrap = true
-
-		-- spell actions, leader sa to trigger z=
-		vim.keymap.set("n", "<leader>sa", function()
-			local snacks = require("snacks")
-			local word = vim.fn.expand("<cword>")
-			local suggestions = vim.fn.spellsuggest(word)
-			if #suggestions == 0 then
-				vim.notify("No spelling suggestions for '" .. word .. "'", vim.log.levels.INFO)
-				return
+		-- Only run if the cursor is not in insert mode
+		if vim.fn.mode() ~= "i" then
+			local clients = vim.lsp.get_clients({ bufnr = 0 })
+			local supports_highlight = false
+			for _, client in ipairs(clients) do
+				if client.server_capabilities.documentHighlightProvider then
+					supports_highlight = true
+					break -- Found a supporting client, no need to check others
+				end
 			end
 
-			local items = vim.tbl_map(function(s)
-				return { text = s }
-			end, suggestions)
+			if supports_highlight then
+				vim.lsp.buf.clear_references()
+				vim.lsp.buf.document_highlight()
+			end
+		end
+	end,
+})
 
-			snacks.picker({
-				prompt = "Spelling for: " .. word,
-				items = items,
-				on_confirm = function(choice)
-					if choice and choice.text then
-						vim.cmd("normal! ciw" .. choice.text)
-					end
-				end,
-			})
-		end)
+-- ide like highlight when stopping cursor
+vim.api.nvim_create_autocmd("CursorMovedI", {
+	group = "LspReferenceHighlight",
+	desc = "Clear highlights when entering insert mode",
+	callback = function()
+		vim.lsp.buf.clear_references()
 	end,
 })
