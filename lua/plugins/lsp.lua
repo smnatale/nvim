@@ -28,9 +28,32 @@ return {
 				run_on_start = true,
 			})
 
+			local ts_inlay_hints = {
+				includeInlayParameterNameHints = "all",
+				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayVariableTypeHints = true,
+				includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayEnumMemberValueHints = true,
+			}
+
+			vim.lsp.config("ts_ls", {
+				settings = {
+					typescript = {
+						inlayHints = ts_inlay_hints,
+					},
+					javascript = {
+						inlayHints = ts_inlay_hints,
+					},
+				},
+			})
+
 			vim.lsp.config("lua_ls", {
 				settings = {
 					Lua = {
+						hint = { enable = true },
 						workspace = {
 							library = vim.api.nvim_get_runtime_file("", true),
 						},
@@ -41,6 +64,15 @@ return {
 			vim.lsp.config("gopls", {
 				settings = {
 					gopls = {
+						hints = {
+							rangeVariableTypes = true,
+							parameterNames = true,
+							constantValues = true,
+							assignVariableTypes = true,
+							compositeLiteralFields = true,
+							compositeLiteralTypes = true,
+							functionTypeParameters = true,
+						},
 						completeUnimported = true,
 						usePlaceholders = true,
 						analyses = {

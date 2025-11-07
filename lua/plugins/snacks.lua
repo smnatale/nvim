@@ -2,6 +2,7 @@ local get_custom_layout = function(height)
 	---@type snacks.picker.layout.Config
 	return {
 		reverse = true,
+
 		layout = {
 			box = "vertical",
 			backdrop = false,
@@ -34,6 +35,13 @@ return {
 			lazygit = {},
 			terminal = {},
 			picker = {
+				win = {
+					input = {
+						keys = {
+							["p"] = { "focus_preview", mode = { "n", "x" } },
+						},
+					},
+				},
 				matcher = {
 					frecency = true,
 				},
@@ -79,7 +87,6 @@ return {
 					Snacks.picker.smart({ hidden = true })
 				end,
 			},
-
 			{
 				"<leader>sg",
 				function()
@@ -92,7 +99,12 @@ return {
 					Snacks.picker.help()
 				end,
 			},
-
+			{
+				"<leader>sb",
+				function()
+					Snacks.picker.buffers()
+				end,
+			},
 			{
 				"<leader>gi",
 				function()
@@ -109,12 +121,6 @@ return {
 				"<leader>gp",
 				function()
 					Snacks.picker.gh_pr()
-				end,
-			},
-			{
-				"<leader>gP",
-				function()
-					Snacks.picker.gh_pr({ state = "all" })
 				end,
 			},
 			{
