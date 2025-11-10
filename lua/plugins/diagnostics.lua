@@ -3,35 +3,46 @@ return {
 		"folke/trouble.nvim",
 		config = function()
 			require("trouble").setup()
+			vim.diagnostic.config({ virtual_text = true })
 		end,
 	},
 	{
-		"rachartier/tiny-inline-diagnostic.nvim",
-		event = "VeryLazy",
-		priority = 1000,
+		"artemave/workspace-diagnostics.nvim",
 		config = function()
-			require("tiny-inline-diagnostic").setup({
-				preset = "powerline",
-				throttle = 0,
-				enable_on_insert = true,
-				enable_on_select = true,
-				options = {
-					multilines = {
-						enabled = true,
-					},
-				},
+			require("workspace-diagnostics").setup({
+				workspace_files = function()
+					local gitPath = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+					if gitPath == nil or gitPath == "" then
+						return {}
+					end
+
+					-- get all tracked files
+					local all_files = vim.fn.split(vim.fn.system("git ls-files " .. gitPath), "\n")
+
+					-- directories to ignore
+					local ignore_dirs = { ".yarn", "node_modules", "dist", "build" }
+
+					-- helper to check if file is inside an ignored dir
+					local function is_ignored(file)
+						for _, dir in ipairs(ignore_dirs) do
+							if file:match("^" .. dir .. "/") then
+								return true
+							end
+						end
+						return false
+					end
+
+					-- filter out ignored directories
+					local filtered_files = {}
+					for _, file in ipairs(all_files) do
+						if file ~= "" and not is_ignored(file) then
+							table.insert(filtered_files, file)
+						end
+					end
+
+					return filtered_files
+				end,
 			})
-			vim.diagnostic.config({ virtual_text = false })
 		end,
 	},
 }
-
--- Alternative to tiny-inline-diagnostic:
--- show diagnostics in a floating window on CursorHold
---
--- vim.api.nvim_create_autocmd("CursorHold", {
--- 	group = vim.api.nvim_create_augroup("auto_diagnostics_hover", { clear = true }),
--- 	callback = function()
--- 		vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })
--- 	end,
--- })

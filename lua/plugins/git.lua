@@ -12,7 +12,7 @@ return {
 	{
 		"tpope/vim-fugitive",
 		keys = {
-			{ "<leader>dif", "<cmd>Git difftool<cr>" },
+			{ "<leader>if", "<cmd>Git difftool<cr>" },
 		},
 	},
 }
