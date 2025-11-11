@@ -28,63 +28,6 @@ return {
 				run_on_start = true,
 			})
 
-			local ts_inlay_hints = {
-				includeInlayParameterNameHints = "all",
-				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-				includeInlayFunctionParameterTypeHints = true,
-				includeInlayVariableTypeHints = true,
-				includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-				includeInlayPropertyDeclarationTypeHints = true,
-				includeInlayFunctionLikeReturnTypeHints = true,
-				includeInlayEnumMemberValueHints = true,
-			}
-
-			vim.lsp.config("ts_ls", {
-				settings = {
-					typescript = {
-						inlayHints = ts_inlay_hints,
-					},
-					javascript = {
-						inlayHints = ts_inlay_hints,
-					},
-				},
-				on_attach = function(client, bufnr)
-					require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
-				end,
-			})
-
-			vim.lsp.config("lua_ls", {
-				settings = {
-					Lua = {
-						hint = { enable = true },
-						workspace = {
-							library = vim.api.nvim_get_runtime_file("", true),
-						},
-					},
-				},
-			})
-
-			vim.lsp.config("gopls", {
-				settings = {
-					gopls = {
-						hints = {
-							rangeVariableTypes = true,
-							parameterNames = true,
-							constantValues = true,
-							assignVariableTypes = true,
-							compositeLiteralFields = true,
-							compositeLiteralTypes = true,
-							functionTypeParameters = true,
-						},
-						completeUnimported = true,
-						usePlaceholders = true,
-						analyses = {
-							unusedparams = true,
-						},
-					},
-				},
-			})
-
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 				callback = function(ev)
@@ -126,11 +69,10 @@ return {
 			vim.api.nvim_create_autocmd("LspProgress", {
 				---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
 				callback = function(ev)
-					local client = vim.lsp.get_client_by_id(ev.data.client_id)
 					local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
-					vim.notify(vim.lsp.status(), "info", {
+					vim.notify(vim.lsp.status(), vim.log.levels.INFO, {
 						id = "lsp_progress",
-						title = client.name,
+						msg = ev.data.params.value.message,
 						opts = function(notif)
 							notif.icon = ev.data.params.value.kind == "end" and " "
 								or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]

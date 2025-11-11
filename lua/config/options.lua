@@ -1,74 +1,36 @@
--- Set leader key to space
-vim.g.mapleader = " "
+vim.g.mapleader = " " -- space leader key
+vim.o.mouse = "" -- disable mouse in nvim
 
--- Disable mouse mode
-vim.opt.mouse = ""
+vim.o.termguicolors = true -- enable 24-bit colors
+vim.o.updatetime = 200 -- save swap file with 200ms debouncing
+vim.o.autoread = true -- auto update file if changed outside of nvim
+vim.o.undofile = true -- persistant undo history
+vim.o.number = true -- enable line numbers
+vim.o.relativenumber = true -- enable relative line numbers
 
--- Number of spaces a tab represents
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
+vim.o.completeopt = "menu,menuone,noselect,preview" -- omnicomplete options for popup menu
+vim.o.pumheight = 10 -- max height of completion menu
+vim.o.winborder = "rounded" -- rounded border
+vim.o.showmode = false -- disable showing mode below statusline
 
--- Use appropriate when using indent command
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
+vim.o.cursorline = true -- enable cursor line
+vim.o.signcolumn = "yes" -- always show sign column
+vim.o.ignorecase = true -- case-insensitive search
+vim.o.smartcase = true -- until search pattern contains upper case characters
+vim.o.incsearch = true -- enable highlighting search in progress
 
--- Indenting correctly after { etc
-vim.opt.smartindent = true
+vim.o.tabstop = 2 -- how many spaces tab inserts
+vim.o.softtabstop = 2 -- how many spaces tab inserts
+vim.o.shiftwidth = 2 -- controls number of spaces when using >> or << commands
+vim.o.expandtab = true -- use appropriate number of spaces with tab
+vim.o.smartindent = true -- indenting correctly after {
+vim.o.autoindent = true -- copy indent from current line when starting new line
+vim.o.scrolloff = 8 -- always keep 8 lines above/below cursor unless at start/end of file
 
--- Copy indent from current line when starting new line
-vim.opt.autoindent = true
+vim.o.splitbelow = true -- better splitting
+vim.o.splitright = true -- better splitting
 
--- Prevent line wrapping
-vim.opt.breakindent = true
+vim.o.wrap = false -- disable wrapping
+vim.o.breakindent = true -- prevent line wrapping
 
--- Disable text wrap
-vim.opt.wrap = false
-
--- Speeds up plugin wait time
-vim.opt.updatetime = 300
-
--- Persistant undo file history
-vim.opt.undofile = true
-
--- Enable line numbers
-vim.opt.nu = true
-
--- Enable relative line numbers
-vim.opt.rnu = true
-
--- Disable showing the mode below the statusline
-vim.opt.showmode = false
-
--- Better completion experience
-vim.opt.completeopt = { "menuone", "noselect" }
-
--- Enable 24-bit color
-vim.opt.termguicolors = true
-
--- Enable the sign column to prevent the screen from jumping
-vim.opt.signcolumn = "yes"
-
--- Enable cursor line highlight
-vim.opt.cursorline = true
-
--- Always keep 8 lines above/below cursor unless at start/end of file
-vim.opt.scrolloff = 8
-
--- Better splitting
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-
--- Enable highlighting search in progress
-vim.opt.incsearch = true
-
--- Ignore case for searches
-vim.opt.ignorecase = true
-
--- Enable case-sensitive search when uppercase letter present
-vim.opt.smartcase = true
-
--- bordered popups
-vim.opt.winborder = "rounded"
-
--- Auto update file if changed externally
-vim.opt.autoread = true
+vim.diagnostic.config({ virtual_text = true }) -- inline diagnostics

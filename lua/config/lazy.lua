@@ -19,5 +19,5 @@ require("lazy").setup({
 		{ import = "plugins" },
 	},
 	install = { colorscheme = { "habamax" } },
-	checker = { enabled = true, notify = false },
+	checker = { enabled = true, notify = true },
 })
