@@ -1,5 +1,14 @@
--- Source nvim config changes
-vim.keymap.set("n", "<leader>so", ":update<CR> :source<CR>")
+-- source and update neovim config
+vim.keymap.set("n", "<leader>so", function()
+	vim.cmd("update")
+	vim.cmd("source $MYVIMRC")
+end)
+
+-- restart nvim and restore session
+vim.keymap.set("n", "<leader>re", function()
+	vim.cmd("mks! Session.vim")
+	vim.cmd("restart source Session.vim")
+end)
 
 -- Disable Space bar since it will be used as the leader key
 vim.keymap.set({ "n", "v" }, "<leader>", "<nop>")
