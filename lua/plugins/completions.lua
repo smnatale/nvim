@@ -4,9 +4,6 @@ return {
 		dependencies = {
 			"L3MON4D3/LuaSnip",
 			"rafamadriz/friendly-snippets",
-			"tpope/vim-dadbod",
-			"kristijanhusak/vim-dadbod-completion",
-			"kristijanhusak/vim-dadbod-ui",
 			"fang2hou/blink-copilot",
 		},
 		opts = {
@@ -39,11 +36,7 @@ return {
 					"buffer",
 					"copilot",
 				},
-				per_filetype = {
-					sql = { "snippets", "dadbod", "buffer" },
-				},
 				providers = {
-					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
 					lazydev = {
 						name = "LazyDev",
 						module = "lazydev.integrations.blink",
