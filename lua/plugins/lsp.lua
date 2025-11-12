@@ -43,7 +43,7 @@ return {
 						require("tiny-code-action").code_action()
 					end, { noremap = true, silent = true })
 
-					vim.keymap.set("n", "<leader>f", function()
+					vim.keymap.set("n", "<leader>li", function()
 						if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
 							vim.lsp.buf.code_action({
 								apply = true,
