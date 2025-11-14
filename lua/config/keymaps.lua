@@ -16,6 +16,9 @@ vim.keymap.set({ "n", "v" }, "<leader>", "<nop>")
 -- Redo remap
 vim.keymap.set("n", "U", "<C-r>")
 
+-- after a search, press escape to clear highlights
+vim.keymap.set("n", "<Esc>", ":nohl<CR>")
+
 -- Swap between split buffers
 vim.keymap.set("n", "<C-Left>", ":wincmd h<CR>")
 vim.keymap.set("n", "<C-Down>", ":wincmd j<CR>")
@@ -71,11 +74,13 @@ vim.keymap.set("n", "<leader>st", function()
 	vim.api.nvim_win_set_height(0, 10)
 end)
 
+-- open config file and run :Oil
 vim.keymap.set("n", "<leader>config", function()
 	vim.cmd(":e ~/.config/nvim/init.lua")
 	vim.cmd(":Oil")
 end)
 
+-- toggle inlayhints
 vim.keymap.set("n", "<leader>h", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 	vim.notify(vim.lsp.inlay_hint.is_enabled() and "Inlay Hints Enabled" or "Inlay Hints Disabled")

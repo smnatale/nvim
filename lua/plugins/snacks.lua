@@ -106,6 +106,12 @@ return {
 				end,
 			},
 			{
+				"<leader>sd",
+				function()
+					Snacks.picker.diagnostics()
+				end,
+			},
+			{
 				"<leader>gi",
 				function()
 					Snacks.picker.gh_issue()

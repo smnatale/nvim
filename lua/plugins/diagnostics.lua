@@ -1,11 +1,5 @@
 return {
 	{
-		"folke/trouble.nvim",
-		config = function()
-			require("trouble").setup()
-		end,
-	},
-	{
 		"artemave/workspace-diagnostics.nvim",
 		config = function()
 			require("workspace-diagnostics").setup({
