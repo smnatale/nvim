@@ -66,37 +66,3 @@ vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
 		vim.opt_local.cursorline = false
 	end,
 })
-
--- highlight references when the cursor is idle (stops/holds)
-vim.api.nvim_create_autocmd("CursorHold", {
-	group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = true }),
-	desc = "Highlight references when cursor stops",
-	callback = function()
-		if vim.fn.mode() ~= "i" then
-			local clients = vim.lsp.get_clients({ bufnr = 0 })
-			local supports_highlight = false
-			for _, client in ipairs(clients) do
-				if client.server_capabilities.documentHighlightProvider then
-					supports_highlight = true
-					-- found a supporting client, no need to check others
-					break
-				end
-			end
-
-			-- proceed only if an LSP is active AND supports the feature
-			if supports_highlight then
-				vim.lsp.buf.clear_references()
-				vim.lsp.buf.document_highlight()
-			end
-		end
-	end,
-})
-
--- clear highlights when the cursor moves again
-vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-	group = "LspReferenceHighlight",
-	desc = "Clear references when cursor moves",
-	callback = function()
-		vim.lsp.buf.clear_references()
-	end,
-})

@@ -5,9 +5,10 @@ vim.keymap.set("n", "<leader>so", function()
 end)
 
 -- restart nvim and restore session
+local session_file = vim.fn.stdpath("state") .. "/Session.vim"
 vim.keymap.set("n", "<leader>re", function()
-	vim.cmd("mks! Session.vim")
-	vim.cmd("restart source Session.vim")
+	vim.cmd("mks! " .. vim.fn.fnameescape(session_file))
+	vim.cmd("restart source " .. vim.fn.fnameescape(session_file))
 end)
 
 -- Disable Space bar since it will be used as the leader key
@@ -66,14 +67,6 @@ vim.keymap.set("v", "<C-Up>", ":m '<-2<CR>gv=gv")
 -- Exit terminal with Esc
 vim.keymap.set("t", "<Esc>", "<C-\\><C-N>")
 
--- Open small terminal
-vim.keymap.set("n", "<leader>st", function()
-	vim.cmd.vnew()
-	vim.cmd.term()
-	vim.cmd.wincmd("J")
-	vim.api.nvim_win_set_height(0, 10)
-end)
-
 -- open config file and run :Oil
 vim.keymap.set("n", "<leader>config", function()
 	vim.cmd(":e ~/.config/nvim/init.lua")
@@ -84,4 +77,42 @@ end)
 vim.keymap.set("n", "<leader>h", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 	vim.notify(vim.lsp.inlay_hint.is_enabled() and "Inlay Hints Enabled" or "Inlay Hints Disabled")
+end)
+
+-- small terminal
+local term_win = nil
+local term_buf = nil
+
+vim.keymap.set("n", "<leader>st", function()
+	-- If window exists, close it
+	if term_win and vim.api.nvim_win_is_valid(term_win) then
+		vim.api.nvim_win_close(term_win, true)
+		term_win = nil
+		return
+	end
+
+	local function open_term()
+		vim.cmd.new()
+		vim.cmd.wincmd("J")
+		vim.api.nvim_win_set_height(0, 12)
+		vim.wo.winfixheight = true
+	end
+
+	-- If buffer exists, reuse it
+	if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
+		open_term()
+		vim.api.nvim_win_set_buf(0, term_buf)
+		term_win = vim.api.nvim_get_current_win()
+		vim.cmd.startinsert()
+		return
+	end
+
+	-- Otherwise create a new terminal buffer
+	open_term()
+	vim.opt_local.laststatus = 0
+	vim.cmd.term()
+	vim.cmd.startinsert()
+
+	term_win = vim.api.nvim_get_current_win()
+	term_buf = vim.api.nvim_get_current_buf()
 end)

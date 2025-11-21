@@ -4,7 +4,9 @@ return {
 		opts = {
 			options = {
 				disabled_filetypes = {
-					statusline = { "NvimTree" },
+					statusline = {
+						"",
+					},
 				},
 			},
 			sections = {
