@@ -109,7 +109,6 @@ vim.keymap.set("n", "<leader>st", function()
 
 	-- Otherwise create a new terminal buffer
 	open_term()
-	vim.opt_local.laststatus = 0
 	vim.cmd.term()
 	vim.cmd.startinsert()
 

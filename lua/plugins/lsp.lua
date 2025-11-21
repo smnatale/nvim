@@ -1,31 +1,11 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		"mason-org/mason.nvim",
-		"mason-org/mason-lspconfig.nvim",
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"rachartier/tiny-code-action.nvim",
 		"nvim-lua/plenary.nvim",
 	},
 	config = function()
-		require("mason").setup()
-		require("mason-lspconfig").setup()
-		require("mason-tool-installer").setup({
-			ensure_installed = {
-				"stylua",
-				"prettierd",
-				"eslint-lsp",
-				"lua_ls",
-				"tailwindcss-language-server",
-				"ts_ls",
-				"gopls",
-				"graphql",
-				"goimports",
-				"copilot",
-			},
-			auto_update = false,
-			run_on_start = true,
-		})
+		vim.lsp.enable({ "lua_ls", "ts_ls", "gopls", "eslint" })
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -62,6 +42,13 @@ return {
 						border = "rounded",
 					})
 				end, opts)
+
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					buffer = ev.buf,
+					callback = function()
+						vim.lsp.buf.format()
+					end,
+				})
 			end,
 		})
 	end,
