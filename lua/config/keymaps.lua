@@ -1,14 +1,14 @@
 -- source and update neovim config
 vim.keymap.set("n", "<leader>so", function()
-	vim.cmd("update")
-	vim.cmd("source $MYVIMRC")
+  vim.cmd("update")
+  vim.cmd("source $MYVIMRC")
 end)
 
 -- restart nvim and restore session
 local session_file = vim.fn.stdpath("state") .. "/Session.vim"
 vim.keymap.set("n", "<leader>re", function()
-	vim.cmd("mks! " .. vim.fn.fnameescape(session_file))
-	vim.cmd("restart source " .. vim.fn.fnameescape(session_file))
+  vim.cmd("mks! " .. vim.fn.fnameescape(session_file))
+  vim.cmd("restart source " .. vim.fn.fnameescape(session_file))
 end)
 
 -- Disable Space bar since it will be used as the leader key
@@ -69,49 +69,55 @@ vim.keymap.set("t", "<Esc>", "<C-\\><C-N>")
 
 -- open config file and run :Oil
 vim.keymap.set("n", "<leader>config", function()
-	vim.cmd(":e ~/.config/nvim/init.lua")
-	vim.cmd(":Oil")
+  vim.cmd(":e ~/.config/nvim/init.lua")
+  vim.cmd(":Oil")
 end)
 
 -- toggle inlayhints
 vim.keymap.set("n", "<leader>h", function()
-	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-	vim.notify(vim.lsp.inlay_hint.is_enabled() and "Inlay Hints Enabled" or "Inlay Hints Disabled")
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+  vim.notify(vim.lsp.inlay_hint.is_enabled() and "Inlay Hints Enabled" or "Inlay Hints Disabled")
 end)
+
+vim.keymap.set("n", "<leader>tn", ":tabnew<CR>")
+vim.keymap.set("n", "<leader>tq", ":tabclose<CR>")
+vim.keymap.set("n", "<leader>ts", ":tab split<CR>")
+vim.keymap.set("n", "<leader><Tab>", ":tabnext<CR>")
+vim.keymap.set("n", "<leader><S-Tab>", ":tabprevious<CR>")
 
 -- small terminal
 local term_win = nil
 local term_buf = nil
 
 vim.keymap.set("n", "<leader>st", function()
-	-- If window exists, close it
-	if term_win and vim.api.nvim_win_is_valid(term_win) then
-		vim.api.nvim_win_close(term_win, true)
-		term_win = nil
-		return
-	end
+  -- If window exists, close it
+  if term_win and vim.api.nvim_win_is_valid(term_win) then
+    vim.api.nvim_win_close(term_win, true)
+    term_win = nil
+    return
+  end
 
-	local function open_term()
-		vim.cmd.new()
-		vim.cmd.wincmd("J")
-		vim.api.nvim_win_set_height(0, 12)
-		vim.wo.winfixheight = true
-	end
+  local function open_term()
+    vim.cmd.new()
+    vim.cmd.wincmd("J")
+    vim.api.nvim_win_set_height(0, 12)
+    vim.wo.winfixheight = true
+  end
 
-	-- If buffer exists, reuse it
-	if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
-		open_term()
-		vim.api.nvim_win_set_buf(0, term_buf)
-		term_win = vim.api.nvim_get_current_win()
-		vim.cmd.startinsert()
-		return
-	end
+  -- If buffer exists, reuse it
+  if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
+    open_term()
+    vim.api.nvim_win_set_buf(0, term_buf)
+    term_win = vim.api.nvim_get_current_win()
+    vim.cmd.startinsert()
+    return
+  end
 
-	-- Otherwise create a new terminal buffer
-	open_term()
-	vim.cmd.term()
-	vim.cmd.startinsert()
+  -- Otherwise create a new terminal buffer
+  open_term()
+  vim.cmd.term()
+  vim.cmd.startinsert()
 
-	term_win = vim.api.nvim_get_current_win()
-	term_buf = vim.api.nvim_get_current_buf()
+  term_win = vim.api.nvim_get_current_win()
+  term_buf = vim.api.nvim_get_current_buf()
 end)

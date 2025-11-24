@@ -1,16 +1,17 @@
 return {
   "nvim-telescope/telescope.nvim",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-telescope/telescope-ui-select.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-  },
+  lazy = false,
   keys = {
     { "<leader>sf", "<cmd>Telescope find_files<cr>" },
     { "<leader>sg", "<cmd>Telescope live_grep<cr>" },
     { "<leader>sh", "<cmd>Telescope help_tags<cr>" },
     { "<leader>sd", "<cmd>Telescope diagnostics<cr>" },
     { "<leader>sb", "<cmd>Telescope buffers<cr>" },
+  },
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope-ui-select.nvim",
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   },
   config = function()
     local bottom_pane_config = {
@@ -32,16 +33,15 @@ return {
       },
       pickers = {
         live_grep = {
-          file_ignore_patterns = { 'node_modules', '.git' },
+          file_ignore_patterns = { "node_modules", ".git" },
           additional_args = function(_)
             return { "--hidden" }
-          end
+          end,
         },
         find_files = {
-          file_ignore_patterns = { 'node_modules', '.git', },
-          hidden = true
-        }
-
+          file_ignore_patterns = { "node_modules", ".git" },
+          hidden = true,
+        },
       },
     })
     require("telescope").load_extension("fzf")
