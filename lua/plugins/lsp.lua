@@ -42,13 +42,6 @@ return {
             border = "rounded",
           })
         end, opts)
-
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          buffer = ev.buf,
-          callback = function()
-            vim.lsp.buf.format()
-          end,
-        })
       end,
     })
   end,
