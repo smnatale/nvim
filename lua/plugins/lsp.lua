@@ -1,48 +1,43 @@
-return {
-  "neovim/nvim-lspconfig",
-  dependencies = {
-    "rachartier/tiny-code-action.nvim",
-    "nvim-lua/plenary.nvim",
-  },
-  config = function()
-    vim.lsp.enable({ "lua_ls", "ts_ls", "gopls", "eslint" })
+vim.pack.add({
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
+	{ src = "https://github.com/b0o/SchemaStore.nvim" },
+	{ src = "https://github.com/rachartier/tiny-code-action.nvim" },
+})
 
-    vim.api.nvim_create_autocmd("LspAttach", {
-      group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-      callback = function(ev)
-        local opts = { buffer = ev.buf }
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        vim.keymap.set("n", "<leader><space>", vim.lsp.buf.hover, opts)
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-        vim.keymap.set("n", "<leader>K", vim.lsp.buf.type_definition, opts)
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+vim.lsp.enable({ "lua_ls", "ts_ls", "jsonls", "yamlls", "gopls", "just" })
 
-        vim.keymap.set({ "n", "x" }, "<leader>ca", function()
-          require("tiny-code-action").code_action()
-        end, { noremap = true, silent = true })
+require("tiny-code-action").setup({
+	picker = {
+		"telescope",
+		opts = {
+			layout_strategy = "horizontal",
+			layout_config = {
+				horizontal = {
+					prompt_position = "top",
+					width = 0.8,
+					height = 0.8,
+					preview_width = 0.5,
+				},
+			},
+			sorting_strategy = "ascending",
+			prompt_prefix = "",
+			entry_prefix = "  ",
+			prompt_title = false,
+			results_title = false,
+			preview_title = false,
+		},
+	},
+	backend = "delta",
+})
 
-        vim.keymap.set("n", "<leader>li", function()
-          if vim.bo.filetype == "typescript" or vim.bo.filetype == "typescriptreact" then
-            vim.lsp.buf.code_action({
-              apply = true,
-              ---@diagnostic disable-next-line: assign-type-mismatch
-              context = { only = { "source.removeUnused.ts" }, diagnostics = {} },
-            })
-            vim.defer_fn(function()
-              vim.lsp.buf.format({ timeout_ms = 10000 })
-            end, 100) -- 100ms delay
-          else
-            vim.lsp.buf.format({ timeout_ms = 10000 })
-          end
-        end)
+vim.keymap.set({ "n", "x" }, "<leader>ca", function()
+	require("tiny-code-action").code_action()
+end, { noremap = true, silent = true })
 
-        vim.keymap.set("n", "<leader>k", function()
-          vim.diagnostic.open_float({
-            border = "rounded",
-          })
-        end, opts)
-      end,
-    })
-  end,
-}
+vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+vim.keymap.set("n", "<leader>gt", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
+vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "Find references" })
+vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover, { desc = "Hover documentation" })
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })

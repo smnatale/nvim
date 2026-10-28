@@ -1,16 +1,24 @@
-return {
-	"rose-pine/neovim",
-	name = "rose-pine",
-	opts = {
-		styles = {
-			bold = false,
-			italic = true,
-			transparency = true,
-		},
+vim.pack.add({
+	{ src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
+})
+
+require("catppuccin").setup({
+	flavour = "mocha",
+	transparent_background = true,
+	float = {
+		transparent = true,
 	},
-	config = function(_, opts)
-		require("rose-pine").setup(opts)
-		vim.cmd("colorscheme rose-pine")
-		vim.api.nvim_set_hl(0, "LspInlayHint", { bg = "none", fg = "#6e6a86", italic = true })
+	no_bold = true,
+	no_italic = true,
+	custom_highlights = function(colors)
+		return {
+			MiniIndentscopeSymbol = { link = "LineNr" },
+			LspInlayHint = { bg = colors.base, fg = colors.overlay0, italic = true },
+			NotificationInfo = { bg = "NONE", fg = colors.text },
+			NotificationWarning = { bg = "NONE", fg = colors.overlay2 },
+			NotificationError = { bg = "NONE", fg = colors.red },
+		}
 	end,
-}
+})
+
+vim.cmd("colorscheme catppuccin-mocha")

@@ -4,7 +4,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	pattern = "*",
 	desc = "highlight selection on yank",
 	callback = function()
-		vim.highlight.on_yank({ timeout = 200, visual = true })
+		vim.hl.hl_op({ timeout = 200, on_visual = true })
 	end,
 })
 
@@ -34,14 +34,6 @@ vim.api.nvim_create_autocmd("VimResized", {
 	command = "wincmd =",
 })
 
--- no auto continue comments on new line
-vim.api.nvim_create_autocmd("FileType", {
-	group = vim.api.nvim_create_augroup("no_auto_comment", {}),
-	callback = function()
-		vim.opt_local.formatoptions:remove({ "c", "r", "o" })
-	end,
-})
-
 -- syntax highlighting for dotenv files
 vim.api.nvim_create_autocmd("BufRead", {
 	group = vim.api.nvim_create_augroup("dotenv_ft", { clear = true }),
@@ -51,18 +43,20 @@ vim.api.nvim_create_autocmd("BufRead", {
 	end,
 })
 
--- show cursorline only in active window enable
-vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
-	group = vim.api.nvim_create_augroup("active_cursorline", { clear = true }),
-	callback = function()
-		vim.opt_local.cursorline = true
-	end,
-})
-
--- show cursorline only in active window disable
-vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
-	group = "active_cursorline",
-	callback = function()
-		vim.opt_local.cursorline = false
-	end,
-})
+-- remove plugins from disk that are no longer in vim.pack.add() specs
+vim.api.nvim_create_user_command("PackClean", function()
+	local inactive = vim.iter(vim.pack.get())
+		:filter(function(x)
+			return not x.active
+		end)
+		:map(function(x)
+			return x.spec.name
+		end)
+		:totable()
+	if #inactive == 0 then
+		vim.notify("No inactive plugins to remove", vim.log.levels.INFO)
+		return
+	end
+	vim.pack.del(inactive)
+	vim.notify("Removed: " .. table.concat(inactive, ", "), vim.log.levels.INFO)
+end, { desc = "Remove plugins not in vim.pack.add() specs" })
